@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Лето на Щучьем озере - Турбаза & SUP</title>
-    <link href="https://cloudflare.com" rel="stylesheet">
     <style>
         :root {
             --bg-color: #0b132b;
             --card-bg: rgba(255, 255, 255, 0.06);
             --accent-color: #48cae4;
-            --accent-gradient: linear-gradient(135deg, #00b4d8, #0077b6);
             --text-color: #ffffff;
             --text-muted: #94a3b8;
             --success-color: #4ade80;
@@ -25,13 +23,14 @@
             padding-bottom: 90px;
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
+            scroll-behavior: smooth;
         }
 
         /* Главный баннер */
         .hero {
             position: relative;
-            height: 220px;
-            background: linear-gradient(rgba(11,19,43,0.3), var(--bg-color)), 
+            height: 200px;
+            background: linear-gradient(rgba(11,19,43,0.2), var(--bg-color)), 
                         url('https://unsplash.com') center/cover;
             display: flex;
             flex-direction: column;
@@ -45,15 +44,13 @@
         .container { padding: 16px; }
         
         .section-title { 
-            font-size: 18px; 
+            font-size: 19px; 
             font-weight: 700; 
-            margin: 25px 0 12px; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
+            margin: 35px 0 15px; 
             letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 8px;
         }
-        .section-title i { color: var(--accent-color); }
 
         /* Карточки */
         .card {
@@ -63,7 +60,7 @@
             border: 1px solid rgba(255,255,255,0.08);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -82,56 +79,62 @@
         h3 { margin: 0 0 6px 0; font-size: 16px; font-weight: 700; }
         .desc { font-size: 13px; color: var(--text-muted); margin: 0; line-height: 1.4; }
 
-        /* Списки преимуществ */
-        .features-list { list-style: none; padding: 0; margin: 10px 0 0 0; }
+        /* Карточка телефона */
+        .phone-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            padding: 14px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .phone-card-icon {
+            font-size: 20px;
+        }
+        .phone-card-text {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .phone-card-number {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-top: 2px;
+        }
+
+        /* Списки */
+        .features-list { list-style: none; padding: 0; margin: 12px 0 0 0; }
         .features-list li { 
             font-size: 13px; 
-            margin-bottom: 8px; 
+            margin-bottom: 10px; 
             display: flex; 
             align-items: flex-start; 
             gap: 8px; 
             color: #e2e8f0;
         }
-        .features-list li i { color: var(--accent-color); margin-top: 3px; font-size: 12px; }
 
-        /* Инфо-плашка для своих сапов */
+        /* Опции для своих (СПОТ-КАРТА) */
         .byod-header {
-            background: rgba(72, 202, 228, 0.1);
-            border: 1px solid rgba(72, 202, 228, 0.2);
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(72, 202, 228, 0.3) !important;
+        }
+        .byod-price {
+            color: #4ade80 !important;
+            font-size: 22px !important;
+            font-weight: 900;
         }
 
-        /* Кнопки контактов */
-        .btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
-        .btn {
-            background: var(--accent-gradient);
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 15px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            text-decoration: none;
-            transition: background 0.2s, transform 0.1s;
-        }
-        .btn:active { transform: scale(0.98); }
-        .btn-secondary {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        /* Навигация (Таббар) */
+        /* Нижнее меню */
         .tabbar {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
             height: 65px;
-            background: rgba(11, 19, 43, 0.85);
+            background: rgba(11, 19, 43, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-top: 1px solid rgba(255,255,255,0.08);
@@ -151,55 +154,57 @@
             gap: 4px;
             flex: 1;
         }
-        .tab-item.active { color: var(--accent-color); }
-        .tab-item i { font-size: 18px; }
-
-        /* Скрытие секций для таббара */
-        .page-section { display: none; }
-        .page-section.active { display: block; }
+        .tab-item:focus, .tab-item:active { color: var(--accent-color); }
+        .tab-item-icon { font-size: 18px; }
     </style>
 </head>
 <body>
 
-    <!-- Шапка -->
+    <!-- Шапка сайта -->
     <div class="hero">
         <h1>Лето на Щучьем озере</h1>
-        <p><i class="fa-solid fa-location-dot"></i> Бурятия • Турбаза & SUP-сервис</p>
+        <p>📍 Бурятия • Турбаза & SUP-сервис</p>
     </div>
 
     <div class="container">
         
-        <!-- СЕКЦИЯ 1: ГЛАВНАЯ / ПРОЖИВАНИЕ -->
-        <div id="home-page" class="page-section active">
-            <div class="section-title"><i class="fa-solid fa-hotel"></i> Проживание и удобства</div>
+        <!-- РАЗДЕЛ 1: ТУРБАЗА -->
+        <div id="hotel-section">
+            <div class="section-title">🏡 Проживание и удобства</div>
             <div class="card">
-                <h3>Комфортный отдых</h3>
-                <p class="desc">Идеальное место, чтобы перезагрузиться, поймать баланс и отдохнуть с полным комфортом прямо на берегу.</p>
+                <h3>Комфортный отдых на базе</h3>
+                <p class="desc">Планируете идеальные выходные или отпуск в Бурятии? У нас есть всё для того, чтобы вы перезагрузились, поймали баланс и отдохнули с полным комфортом.</p>
                 
                 <ul class="features-list">
-                    <li><i class="fa-solid fa-utensils"></i> Питание: уютная столовая на территории + оборудованная общая кухня для самостоятельной готовки.</li>
-                    <li><i class="fa-solid fa-shower"></i> Комфорт: современный отдельно стоящий благоустроенный санузел с горячим душем.</li>
+                    <li>🥗 <span><strong>Питание:</strong> на территории работает уютная столовая. Для тех, кто любит готовить сам, оборудована общая кухня.</span></li>
+                    <li>🚿 <span><strong>Комфорт:</strong> отдельно стоящий, современный благоустроенный санузел с горячим душем.</span></li>
                 </ul>
                 
-                <div class="price-badge">1 500 ₽ <small>/ сутки с человека</small></div>
+                <div class="price-badge">1 500 ₽ <small>/ сутки с человека (без питания)</small></div>
             </div>
             
-            <div class="btn-group">
-                <a href="tel:+79021685522" class="btn"><i class="fa-solid fa-phone"></i> Забронировать проживание</a>
+            <!-- Информационный блок с телефоном проживания -->
+            <div class="phone-card">
+                <span class="phone-card-icon">📞</span>
+                <div>
+                    <div class="phone-card-text">Телефон для бронирования проживания:</div>
+                    <div class="phone-card-number">+7 (902) 168-55-22</div>
+                </div>
             </div>
         </div>
 
-        <!-- СЕКЦИЯ 2: SUP-СПОТ -->
-        <div id="sup-page" class="page-section">
-            <div class="section-title"><i class="fa-solid fa-water"></i> Наш SUP-спот</div>
-            <p class="desc" style="margin-bottom: 15px; padding: 0 4px;">Вам больше не нужно везти тяжелые доски в багажнике и надувать их на жаре. Всё готово к выходу на воду прямо с нашего берега! Оборудование включено в стоимость.</p>
+
+        <!-- РАЗДЕЛ 2: SUP-СПОТ -->
+        <div id="sup-section">
+            <div class="section-title">🏄‍♂️ Наш SUP-спот</div>
+            <p class="desc" style="margin-bottom: 15px;">Вам больше не нужно везти тяжелые доски в багажнике и надувать их на жаре. Всё готово к вашему выходу на воду прямо с нашего берега! Цены включают полную аренду сапа.</p>
             
             <div class="grid">
                 <div class="card">
                     <h3>Аренда SUP</h3>
                     <p class="desc">Доска + страховочный жилет.</p>
-                    <div class="price-badge" style="font-size:16px;">600 ₽ <small>/ 30 мин</small></div>
-                    <div class="price-badge" style="font-size:16px; margin-top:4px;">1 100 ₽ <small>/ 1 час</small></div>
+                    <div class="price-badge" style="font-size:15px;">600 ₽ <small>/ 30 мин</small></div>
+                    <div class="price-badge" style="font-size:15px; margin-top:5px;">1 100 ₽ <small>/ 1 час</small></div>
                 </div>
                 
                 <div class="card">
@@ -211,33 +216,43 @@
 
             <div class="card" style="margin-top: 12px;">
                 <h3>Индивидуальная тренировка</h3>
-                <p class="desc">Максимум внимания тренера, разбор техники гребли и быстрый прогресс на воде.</p>
+                <p class="desc">Максимум внимания тренера, разбор техники и быстрый прогресс.</p>
                 <div class="price-badge">2 500 ₽ <small>/ 1 час</small></div>
             </div>
 
-            <div class="section-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Магия озера</div>
             <div class="card">
-                <h3>Рассветные и закатные прогулки</h3>
-                <p class="desc">Встречаем солнце на зеркальной глади озера или провожаем его за сопки в сопровождении опытного инструктора.</p>
+                <h3>🌅 Рассветы и закаты</h3>
+                <p class="desc">Проведите самые красивые часы на воде в сопровождении инструктора. Встречаем солнце на зеркальной глади озера или провожаем его за сопки.</p>
                 <ul class="features-list">
-                    <li><i class="fa-solid fa-clock"></i> Длительность: 1,5 – 2 часа</li>
+                    <li>⏱ <span>Длительность: 1,5 – 2 часа</span></li>
                 </ul>
-                <div class="price-badge">2 500 ₽ <small>(сап включен)</small></div>
+                <div class="price-badge">2 500 ₽ <small>(аренда сапа включена)</small></div>
             </div>
             
-            <div class="btn-group">
-                <a href="tel:+79149807155" class="btn"><i class="fa-solid fa-calendar-check"></i> Запись на SUP / Прогулки</a>
+            <!-- Информационный блок с телефоном сап-спота -->
+            <div class="phone-card">
+                <span class="phone-card-icon">📞</span>
+                <div>
+                    <div class="phone-card-text">Телефон сап-спота (прокат и прогулки):</div>
+                    <div class="phone-card-number">+7 (914) 980-71-55</div>
+                </div>
             </div>
         </div>
 
-        <!-- СЕКЦИЯ 3: СО СВОИМ SUP -->
-        <div id="own-sup-page" class="page-section">
-            <div class="section-title"><i class="fa-solid fa-person-swimming"></i> Приехали со своим SUP?</div>
+
+        <!-- РАЗДЕЛ 3: СО СВОИМ SUP -->
+        <div id="own-section">
+            <div class="section-title">🎒 Приехали со своим SUP?</div>
             
             <div class="card byod-header">
-                <h3>Спот-карта (Дневной хаб)</h3>
-                <p class="desc" style="color: #e2e8f0;">Для владельцев собственных досок создана удобная инфраструктура базы на весь день:</p>
+                <h3>Спот-карта (Дневной хаб) — 500 ₽</h3>
+                <p class="desc">Для владельцев своих сапов у нас создан удобный хаб. В вашем распоряжении вся инфраструктура базы на весь день:</p>
                 <ul class="features-list">
-                    <li><i class="fa-solid fa-square-check"></i> Раздевалка (вещи под присмотром администрации)</li>
-                    <li><i class="fa-solid fa-square-check"></i> Удобная чистая стартовая зона для спуска на воду</li>
-                    <li><i class="fa-solid fa-square-check"></i> Обмыв сапа чистой водой и место для просушки</li>
+                    <li>✅ <span>Раздевалка (вещи под присмотром администрации)</span></li>
+                    <li>✅ <span>Удобная и чистая стартовая зона для спуска</span></li>
+                    <li>✅ <span>Обмыв сапа чистой водой и место просушки</span></li>
+                    <li>✅ <span>Доступ к благоустроенному санузлу</span></li>
+                </ul>
+                <div class="byod-price" style="margin-top: 15px;">500 ₽ <small style="font-size:12px; color:var(--text-muted); font-weight:400;">/ в день за весь сервис</small></div>
+            </div>
+
